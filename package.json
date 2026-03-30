@@ -1,0 +1,37 @@
+{
+  "name": "@cyh928/prototyper",
+  "version": "1.1.0",
+  "description": "Converts product source code or Stitch UI designs into standalone interactive HTML demos. Includes a built-in demo for the HKUST Souvenir Store virtual try-on kiosk.",
+  "scripts": {
+    "postinstall": "node scripts/setup.js"
+  },
+  "bin": {
+    "prototyper-setup": "./scripts/setup.js"
+  },
+  "files": [
+    "skills/",
+    ".claude-plugin/",
+    "scripts/",
+    "README.md"
+  ],
+  "keywords": [
+    "claude-code",
+    "prototyper",
+    "demo",
+    "html",
+    "interactive",
+    "stitch",
+    "autoplay",
+    "uststore",
+    "virtual-try-on"
+  ],
+  "author": "CYH928",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CYH928/prototyper-plugin.git"
+  }
+}
