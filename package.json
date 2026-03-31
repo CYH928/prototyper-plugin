@@ -10,6 +10,7 @@
   },
   "files": [
     "skills/",
+    "examples/",
     ".claude-plugin/",
     "scripts/",
     "README.md"

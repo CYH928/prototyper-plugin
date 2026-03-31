@@ -33,7 +33,7 @@ Start from **Step 2: Propose Flow**.
 ```
 Product:   HKUST Souvenir Shop — Virtual Try-On Kiosk
 Framework: Next.js 15 (App Router) + Tailwind v4 + Firebase
-Repo path: C:/Projects/uststore  (or any path the user specifies)
+Repo path: examples/uststore/  (embedded in this plugin repo)
 ```
 
 ### Screens (7 total)
@@ -83,7 +83,7 @@ Shadows:   lg (cards), sm (buttons)
 | typography-crewneck-navy | 文字套頭衛衣 (深藍) | typography-crewneck-navy.png | HK$320 |
 | windbreaker-red | 防風外套 (紅色) | windbreaker-red.png | HK$480 |
 
-Assets path: `public/products/` relative to the project root.
+Assets path: `examples/uststore/public/products/` (embedded in plugin).
 Copy to `prototyper/assets/products/` during generation.
 
 ### Icons
@@ -138,7 +138,7 @@ Layout: Split-screen (iPad 640px | Phone 320px)
 
 Ask the user:
 1. "Does this flow look right? Any steps to add, remove, or reorder?"
-2. "Should I use the real product images from `public/products/`? (hoodie-navy.png, etc.)"
+2. "Should I use the real product images from `examples/uststore/public/products/`? (hoodie-navy.png, etc.)"
 3. "Any audience notes? (e.g. investor demo, internal demo, kiosk showcase)"
 
 ---
@@ -206,7 +206,7 @@ prototyper/
 
 ### Build sequence
 
-1. Copy product images: `cp public/products/*.png prototyper/assets/products/`
+1. Copy product images: `cp examples/uststore/public/products/*.png prototyper/assets/products/`
 2. Build `data.js` with 5 products + mock session object
 3. Build `icons.js` with all 9 required SVG functions
 4. Build `styles.css` with UST brand vars + split-screen layout + all animations

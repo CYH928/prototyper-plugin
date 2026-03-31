@@ -141,18 +141,19 @@ Claude will analyze your project, propose a demo flow for your approval, generat
 
 ## Step-by-Step Guide: HKUST Store Demo
 
-This is the **built-in pre-analyzed demo** for the HKUST Souvenir Store Virtual Try-On Kiosk (`C:/Projects/uststore`). No source scanning needed — jump straight to flow design.
+This is the **built-in pre-analyzed demo** for the HKUST Souvenir Store Virtual Try-On Kiosk (bundled at `examples/uststore/`). No source scanning needed — jump straight to flow design.
 
 ### Prerequisites
 
-- The uststore project cloned at `C:/Projects/uststore` (or adjust the path)
-- Product images present at `public/products/*.png`
-- Claude Code open in the uststore project directory
+- Claude Code installed
+- The plugin installed (via npm or git clone)
 
-### Step 1 — Open the uststore project in Claude Code
+The full uststore Next.js source code is bundled at `examples/uststore/` — no separate repo needed.
+
+### Step 1 — Open Claude Code in the example project
 
 ```bash
-cd C:/Projects/uststore
+cd examples/uststore
 claude
 ```
 

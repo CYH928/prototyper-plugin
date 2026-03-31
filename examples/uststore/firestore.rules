@@ -1,0 +1,16 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /products/{productId} {
+      allow read: if true;
+      allow write: if false;
+    }
+    match /sessions/{sessionId} {
+      allow read: if true;
+      allow create: if true;
+      allow update: if request.resource.data.status == "uploaded"
+                    && resource.data.status in ["waiting_upload", "completed", "error"];
+      allow delete: if false;
+    }
+  }
+}
