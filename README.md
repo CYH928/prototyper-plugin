@@ -12,8 +12,8 @@ Includes a **built-in demo** for the **HKUST Souvenir Store Virtual Try-On Kiosk
 2. [Install via npm](#install-via-npm)
 3. [Install via Git](#install-via-git)
 4. [Quick Start](#quick-start)
-5. [Step-by-Step Guide: HKUST Store Demo](#step-by-step-guide-hkust-store-demo)
-6. [Step-by-Step Guide: Any Project](#step-by-step-guide-any-project)
+5. [Try It Yourself: Hands-On Tutorial](#try-it-yourself-hands-on-tutorial)
+6. [Tutorial: Any Project](#tutorial-any-project-your-own-code)
 7. [Commands Reference](#commands-reference)
 8. [Output Structure](#output-structure)
 9. [Features](#features)
@@ -139,128 +139,150 @@ Claude will analyze your project, propose a demo flow for your approval, generat
 
 ---
 
-## Step-by-Step Guide: HKUST Store Demo
+## Try It Yourself: Hands-On Tutorial
 
-This is the **built-in pre-analyzed demo** for the HKUST Souvenir Store Virtual Try-On Kiosk (bundled at `examples/uststore/`). No source scanning needed — jump straight to flow design.
+This tutorial uses the **bundled example project** (`examples/uststore/`) so you can try Prototyper immediately after install — no extra repos needed.
 
-### Prerequisites
+### What you'll build
 
-- Claude Code installed
-- The plugin installed (via npm or git clone)
+A split-screen interactive demo of the HKUST Souvenir Store Virtual Try-On Kiosk:
+- **Left panel**: iPad kiosk (product grid → QR code → AI processing → result)
+- **Right panel**: Phone (photo upload → progress bar → thank you)
+- **Auto-play**: A simulated cursor clicks through the entire flow on loop
 
-The full uststore Next.js source code is bundled at `examples/uststore/` — no separate repo needed.
+### Step 1 — Open the example project
 
-### Step 1 — Open Claude Code in the example project
-
+If you installed via **npm**:
 ```bash
-cd examples/uststore
+cd $(npm root -g)/@cyh928/prototyper/examples/uststore
 claude
 ```
 
-### Step 2 — Run the uststore skill
+If you installed via **git clone**:
+```bash
+cd prototyper-plugin/examples/uststore
+claude
+```
 
+### Step 2 — Ask Claude to make a demo (pick one)
+
+You can use **slash commands** or **natural language** — both work:
+
+**Option A: Slash command (fastest)**
 ```
 /prototyper:uststore
 ```
 
-Claude will present the **pre-built demo flow** for your approval:
+**Option B: Natural language**
+```
+Make me an interactive demo of this project
+```
+
+**Option C: Natural language with details**
+```
+I want to create a clickable HTML demo of this virtual try-on kiosk
+for an investor presentation. Show the iPad and phone side by side.
+```
+
+> **Tip:** You don't need to know the slash commands. Just describe what you want
+> in plain English — Claude will figure out which Prototyper steps to run.
+
+### Step 3 — Review the proposed flow
+
+Claude will analyze the source code and present a numbered timeline like this:
 
 ```
 Proposed demo flow — HKUST Virtual Try-On Kiosk:
 
-Layout: Split-screen (iPad left | Phone right)
-
-1. ⏳ Loading skeleton (1.5s) — both panels shimmer
-2. 🛍  iPad: Product grid — 5 items (HKUST Hoodie highlighted)
-3. 👆 Cursor clicks "HKUST Hoodie 深藍" → product selected
-4. 📱 iPad: QR code page — pulsing border, scan instruction
-5. 📸 Phone: Upload page appears
-6. 👆 Phone cursor taps "選擇相片"
-7. ⬆️  Phone: Upload progress 0%→100% (2s)
-8. ✅ Phone: Thank-you screen
-9. ⏳ iPad: AI processing animation (4s)
-10. 🎉 iPad: Result — photo + try-on side by side
-11. 🔄 Fade back to product grid → loop
-
-Estimated duration: ~35s at 1x speed
+ 1. Loading skeleton — both panels shimmer
+ 2. iPad: Product grid appears — 5 items
+ 3. Cursor clicks "HKUST Hoodie" — product selected
+ 4. iPad: QR code page — "scan to upload" instruction
+ 5. Phone: Upload page appears
+ 6. Phone cursor taps "select photo"
+ 7. Phone: Upload progress 0% → 100%
+ 8. Phone: Thank-you screen
+ 9. iPad: AI processing animation
+10. iPad: Result — original photo + try-on side by side
+11. Fade back to product grid → loop
 ```
 
-### Step 3 — Tune the flow (optional)
+Claude will then ask if this looks right. **Here's how to respond:**
 
-Claude will ask 2–3 questions. Example responses:
+| What you want to do | What to say |
+|---------------------|-------------|
+| Accept as-is | `looks good` or `proceed` |
+| Remove a step | `skip the upload progress bar, go straight to thank-you` |
+| Add a step | `add a 2-second pause on the result screen before looping` |
+| Change the starting product | `start with the windbreaker instead of the hoodie` |
+| Change the audience | `this is for investors, make it look polished` |
+| Change the layout | `use a single panel instead of split-screen` |
+| Speed up the demo | `make the whole loop finish in 20 seconds` |
 
-| You want | Say |
-|----------|-----|
-| Skip the upload animation | "Skip step 7, go straight to thank-you" |
-| Show more products | "Show all 5 products before clicking" |
-| Investor audience | "Make it look polished for investors" |
-| Different product first | "Start with the windbreaker instead" |
+### Step 4 — Watch Claude generate
 
-Type **"looks good"** or **"proceed"** to accept the default flow.
-
-### Step 4 — Generation (automatic)
-
-Claude generates `prototyper/` in the current directory:
+After you approve, Claude builds the demo automatically. You'll see it creating files:
 
 ```
 prototyper/
 ├── index.html              ← open this in your browser
 ├── css/styles.css
 ├── js/
-│   ├── data.js             ← 5 HKUST products
-│   ├── icons.js            ← Lucide SVGs (ShoppingBag, QrCode, Camera…)
-│   ├── screens.js          ← 7 screen renderers (iPad + Phone)
-│   ├── autoplay.js         ← 11-step auto-play script
-│   └── app.js              ← dual-panel state machine
-└── assets/products/        ← hoodie-navy.png, hoodie-gold.png, etc.
+│   ├── data.js             ← product data
+│   ├── icons.js            ← SVG icons
+│   ├── screens.js          ← screen renderers
+│   ├── autoplay.js         ← auto-play script
+│   └── app.js              ← state machine
+└── assets/products/        ← product images
 ```
 
-This takes **2–5 minutes** depending on complexity.
+This takes **2–5 minutes**. You don't need to do anything — just wait.
 
-### Step 5 — Verify locally
+### Step 5 — Preview and fix
 
-```
-/prototyper:verify
-```
-
-Claude runs a syntax check and starts a local server:
+Claude will verify the output and start a local server:
 
 ```
 Demo running at http://localhost:3333
 ```
 
-Open the URL in your browser. The demo auto-plays on load:
-- Left panel: iPad kiosk flow
-- Right panel: Phone upload flow
-- Control bar at top: Pause / Speed / Skip / Reset
+Open the URL in your browser. If something looks wrong, **just describe it:**
 
-**If anything looks wrong**, describe it to Claude: "The product images are broken" or "The spinner doesn't appear" — Claude will fix and re-verify.
+```
+the product images are broken
+```
+```
+the spinner doesn't show up on the processing screen
+```
+```
+the phone panel is too tall, it's overlapping the control bar
+```
 
-### Step 6 — Deploy to GitHub Pages
+Claude will fix the issue and re-serve. Repeat until it looks right.
 
+### Step 6 — Deploy (optional)
+
+When you're happy with the demo:
+
+```
+deploy this to GitHub Pages
+```
+
+Or use the slash command:
 ```
 /prototyper:deploy
 ```
 
-Claude pushes `prototyper/` to your repo and outputs the public URL:
-
+Claude will push and give you the public URL:
 ```
-Demo deployed!
-
-🖥  Local:   http://localhost:3333
-🌐 Public:  https://<user>.github.io/uststore/prototyper/index.html
+https://<your-username>.github.io/uststore/prototyper/index.html
 ```
-
-Share the public URL — anyone can view the interactive demo.
-
-> **Note:** GitHub Pages may take 1–2 minutes to go live on first deploy.
-> Enable GitHub Pages in repo Settings → Pages → Source: main branch / (root).
 
 ---
 
-## Step-by-Step Guide: Any Project
+## Tutorial: Any Project (Your Own Code)
 
-Use these steps for any codebase (React, Next.js, Vue, Flask, etc.).
+Use these same steps on **your own codebase** — React, Next.js, Vue, Flask, anything.
 
 ### Step 1 — Open your project
 
@@ -269,57 +291,45 @@ cd /path/to/your/project
 claude
 ```
 
-### Step 2 — Analyze the source
+### Step 2 — Ask Claude to make a demo
 
-```
-/prototyper:analyze .
-```
-
-Claude maps all screens, routes, styles, icons, and assets. Review the output.
-
-### Step 3 — Propose the demo flow
-
-```
-/prototyper:propose
-```
-
-Claude presents a numbered timeline. You can:
-- Approve it: "looks good"
-- Adjust it: "skip the login screen", "add a 3s loading animation at step 2"
-- Change layout: "make it split-screen"
-- Change audience: "this is for investors, make it impressive"
-
-### Step 4 — Generate
-
-```
-/prototyper:generate
-```
-
-Claude builds `prototyper/` — vanilla HTML/CSS/JS, no build step required.
-
-### Step 5 — Verify
-
-```
-/prototyper:verify
-```
-
-Syntax check + local preview at `http://localhost:3333`. Report any issues.
-
-### Step 6 — Deploy
-
-```
-/prototyper:deploy
-```
-
-Pushes to git and outputs your GitHub Pages URL.
-
-### All-in-one
-
+**Option A: One command does everything**
 ```
 /prototyper:prototyper .
 ```
 
-Runs all 5 steps in sequence with human checkpoints at Step 2 (flow approval) and Step 4 (verify).
+**Option B: Natural language**
+```
+Make an interactive HTML demo of this app
+```
+
+**Option C: Step by step (more control)**
+
+| Step | Slash command | Or say... |
+|------|--------------|-----------|
+| Analyze | `/prototyper:analyze .` | `analyze this project for a demo` |
+| Propose | `/prototyper:propose` | `propose a demo flow` |
+| Generate | `/prototyper:generate` | `generate the demo` |
+| Verify | `/prototyper:verify` | `check if the demo works` |
+| Deploy | `/prototyper:deploy` | `deploy to GitHub Pages` |
+
+### Example prompts for customization
+
+```
+analyze this project but focus only on the dashboard and settings pages
+```
+```
+make the demo split-screen — desktop on the left, mobile on the right
+```
+```
+this is for a sales pitch, make the transitions snappy and add a loading animation
+```
+```
+skip the login flow, start directly on the main page
+```
+```
+use the real product images from public/images/
+```
 
 ---
 

@@ -132,6 +132,17 @@ function main() {
   console.log('║  Quick start:                                            ║');
   console.log('║    /prototyper:prototyper .      ← full workflow         ║');
   console.log('║    /prototyper:uststore          ← HKUST Store demo      ║');
+  console.log('╠══════════════════════════════════════════════════════════╣');
+
+  // Show example project path
+  const examplesDir = path.join(PACKAGE_DIR, 'examples', 'uststore');
+  if (fs.existsSync(examplesDir)) {
+    console.log('║  Try the demo:                                           ║');
+    console.log(`║    cd ${examplesDir}`);
+    console.log('║    claude                                                 ║');
+    console.log('║    /prototyper:uststore                                   ║');
+  }
+
   console.log('╚══════════════════════════════════════════════════════════╝');
   console.log('');
 
